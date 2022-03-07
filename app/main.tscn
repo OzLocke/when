@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://main.gd" type="Script" id=1]
+[ext_resource path="res://conslab.tres" type="DynamicFont" id=2]
+[ext_resource path="res://conslab_large.tres" type="DynamicFont" id=3]
+
+[node name="Container" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rows" type="VBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 580.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Rows"]
+margin_right = 984.0
+margin_bottom = 20.0
+
+[node name="Language" type="MenuButton" parent="Rows/HBoxContainer"]
+margin_right = 490.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Language"
+
+[node name="About" type="Label" parent="Rows/HBoxContainer"]
+margin_left = 494.0
+margin_top = 3.0
+margin_right = 984.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "By Oz Locke"
+align = 1
+
+[node name="Date" type="Label" parent="Rows"]
+margin_top = 24.0
+margin_right = 984.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 2 )
+text = "Mon 01"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Time" type="Label" parent="Rows"]
+margin_top = 129.0
+margin_right = 984.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+text = "00:00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
