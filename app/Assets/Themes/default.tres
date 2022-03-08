@@ -7,7 +7,6 @@
 
 [resource]
 Label/fonts/font = ExtResource( 1 )
-MenuButton/fonts/font = ExtResource( 2 )
 PopupMenu/colors/font_color_hover = Color( 1, 1, 1, 1 )
 PopupMenu/constants/vseparation = 8
 PopupMenu/fonts/font = ExtResource( 2 )

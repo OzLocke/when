@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/conslab_small.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Assets/Fonts/conslab_large.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Assets/Themes/default.tres" type="Theme" id=4]
 [ext_resource path="res://Assets/Images/language.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/themes.png" type="Texture" id=6]
 
 [node name="Container" type="MarginContainer"]
 anchor_right = 1.0
@@ -25,16 +26,44 @@ margin_top = 20.0
 margin_right = 1004.0
 margin_bottom = 580.0
 
-[node name="LanguageButton" type="TextureButton" parent="Rows"]
+[node name="Cols" type="HBoxContainer" parent="Rows"]
+margin_right = 984.0
+margin_bottom = 75.0
+
+[node name="LanguageButton" type="TextureButton" parent="Rows/Cols"]
 margin_right = 75.0
 margin_bottom = 75.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 5 )
 
-[node name="Language" type="PopupMenu" parent="Rows"]
+[node name="Language" type="PopupMenu" parent="Rows/Cols/LanguageButton"]
 margin_left = 10.0
 margin_top = 100.0
-margin_bottom = 79.0
+margin_right = 10.0
+margin_bottom = 100.0
+size_flags_horizontal = 0
+
+[node name="Buffer" type="Control" parent="Rows/Cols"]
+margin_left = 79.0
+margin_right = 905.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThemesButton" type="TextureButton" parent="Rows/Cols"]
+margin_left = 909.0
+margin_right = 984.0
+margin_bottom = 75.0
+size_flags_horizontal = 0
+texture_normal = ExtResource( 6 )
+
+[node name="Themes" type="PopupMenu" parent="Rows/Cols/ThemesButton"]
+margin_left = 10.0
+margin_top = 100.0
+margin_right = 10.0
+margin_bottom = 100.0
 size_flags_horizontal = 0
 
 [node name="Date" type="Label" parent="Rows"]
@@ -73,4 +102,5 @@ custom_fonts/font = ExtResource( 2 )
 text = "By Oz Locke"
 align = 1
 
-[connection signal="button_up" from="Rows/LanguageButton" to="." method="_on_LanguageButton_button_up"]
+[connection signal="button_up" from="Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_button_up"]
+[connection signal="button_up" from="Rows/Cols/ThemesButton" to="." method="_on_ThemesButton_button_up"]
