@@ -3,5 +3,5 @@
 [ext_resource path="res://Assets/Fonts/BRLNSR.TTF" type="DynamicFontData" id=1]
 
 [resource]
-size = 100
+size = 25
 font_data = ExtResource( 1 )

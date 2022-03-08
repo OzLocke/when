@@ -1,16 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Fonts/conslab_small.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/Fonts/conslab_large.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Assets/Themes/default.tres" type="Theme" id=4]
 [ext_resource path="res://Assets/Images/language.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/themes.png" type="Texture" id=6]
 
 [node name="Container" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 4 )
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -43,11 +39,16 @@ margin_right = 10.0
 margin_bottom = 100.0
 size_flags_horizontal = 0
 
-[node name="Buffer" type="Control" parent="Rows/Cols"]
+[node name="Date" type="Label" parent="Rows/Cols"]
 margin_left = 79.0
 margin_right = 905.0
 margin_bottom = 75.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Mon 01"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,26 +67,12 @@ margin_right = 10.0
 margin_bottom = 100.0
 size_flags_horizontal = 0
 
-[node name="Date" type="Label" parent="Rows"]
+[node name="Time" type="Label" parent="Rows"]
 margin_top = 79.0
 margin_right = 984.0
-margin_bottom = 180.0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource( 4 )
-text = "Mon 01"
-align = 1
-valign = 1
-autowrap = true
-
-[node name="Time" type="Label" parent="Rows"]
-margin_top = 184.0
-margin_right = 984.0
-margin_bottom = 530.0
+margin_bottom = 542.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 4 )
-custom_fonts/font = ExtResource( 3 )
 text = "00:00"
 align = 1
 valign = 1
@@ -94,11 +81,10 @@ __meta__ = {
 }
 
 [node name="About" type="Label" parent="Rows"]
-margin_top = 534.0
+margin_top = 546.0
 margin_right = 984.0
 margin_bottom = 560.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 2 )
 text = "By Oz Locke"
 align = 1
 
