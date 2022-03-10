@@ -2,7 +2,7 @@ extends MarginContainer
 
 # Create theme data
 var themes = {
-	"Bubblegum" : {
+	"Candy" : {
 		"bg_color" : Color(0.937255, 0.627451, 0.894118),
 		"color" : Color(0.388235, 0.156863, 0.352941),
 		"font" : "res://Assets/Fonts/BRLNSR"
@@ -13,7 +13,7 @@ var themes = {
 		"font" : "res://Assets/Fonts/ARIALBD"
 		}
 	}
-var themes_list = ["Bubblegum", "Contrast"]
+var themes_list = ["Candy", "Contrast"]
 # Theme for use on start
 var active_theme = "Contrast"
 
@@ -58,6 +58,13 @@ func _ready():
 	# Connect to item selection function
 	loc_themes.connect("id_pressed", self, "_on_theme_pressed")
 	
+	#Set origins for options objects to be centered
+	loc_language_button.rect_pivot_offset = loc_language_button.rect_scale / 2
+	loc_language.rect_pivot_offset = loc_language.rect_scale / 2
+	loc_themes_button.rect_pivot_offset = loc_themes_button.rect_scale / 2
+	loc_themes.rect_pivot_offset = loc_themes.rect_scale / 2
+
+	
 	set_theme(active_theme)
 
 func _process(_delta):
@@ -80,6 +87,14 @@ func set_theme(active_theme):
 	VisualServer.set_default_clear_color(bg_color)
 	
 	#Set fonts and colors
+	loc_language.add_font_override("font",load(font + "_small.tres"))
+	loc_language.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+	loc_language.add_color_override("font_color_hover", color)
+	
+	loc_themes.add_font_override("font",load(font + "_small.tres"))
+	loc_themes.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+	loc_themes.add_color_override("font_color_hover", color)
+	
 	loc_date.add_font_override("font",load(font + ".tres"))
 	loc_date.add_color_override("font_color", color)
 	
@@ -88,7 +103,16 @@ func set_theme(active_theme):
 	
 	loc_about.add_font_override("font",load(font + "_small.tres"))
 	loc_about.add_color_override("font_color", color)
-	
+
+func position_popup(popup, parent):
+	popup.set_position(
+		Vector2(
+			parent.rect_global_position.x,
+			parent.rect_global_position.y + 75
+			),
+		true
+		)
+
 func _on_language_pressed(ID):
 	#Set active_language to clicked language
 	active_language = loc_language.get_item_text(ID)
@@ -100,9 +124,11 @@ func _on_theme_pressed(ID):
 	set_theme(active_theme)
 
 func _on_LanguageButton_button_up():
-	#Show popup on click
+	#Show popup on click (moving popup to under it's buttons)
+	position_popup(loc_language, loc_language_button)
 	loc_language.popup()
 
 func _on_ThemesButton_button_up():
-	#Show popup on click
+	#Show popup on click (moving popup to under it's buttons)
+	position_popup(loc_themes, loc_themes_button)
 	loc_themes.popup()
