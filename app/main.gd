@@ -90,10 +90,12 @@ func set_theme(active_theme):
 	loc_language.add_font_override("font",load(font + "_small.tres"))
 	loc_language.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
 	loc_language.add_color_override("font_color_hover", color)
+	loc_language_button.modulate = color
 	
 	loc_themes.add_font_override("font",load(font + "_small.tres"))
 	loc_themes.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
 	loc_themes.add_color_override("font_color_hover", color)
+	loc_themes_button.modulate = color
 	
 	loc_date.add_font_override("font",load(font + ".tres"))
 	loc_date.add_color_override("font_color", color)
