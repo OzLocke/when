@@ -36,6 +36,11 @@ var loc_themes
 var loc_time
 var loc_about
 
+#Populate variables from active theme dictionary entry
+var bg_color = themes[active_theme]["bg_color"]
+var color = themes[active_theme]["color"]
+var font = themes[active_theme]["font"]
+
 func _ready():
 	#Connect location variables
 	loc_language_button = $Rows/Cols/LanguageButton
@@ -79,9 +84,9 @@ func set_theme(active_theme):
 	# Update colors and fonts based on active theme
 	
 	#Populate variables from active theme dictionary entry
-	var bg_color = themes[active_theme]["bg_color"]
-	var color = themes[active_theme]["color"]
-	var font = themes[active_theme]["font"]
+	bg_color = themes[active_theme]["bg_color"]
+	color = themes[active_theme]["color"]
+	font = themes[active_theme]["font"]
 	
 	#Set background color
 	VisualServer.set_default_clear_color(bg_color)
@@ -134,3 +139,19 @@ func _on_ThemesButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
 	position_popup(loc_themes, loc_themes_button)
 	loc_themes.popup()
+
+
+func _on_LanguageButton_mouse_entered():
+	loc_language_button.modulate = Color(color.r, color.g, color.b, .5)
+
+
+func _on_LanguageButton_mouse_exited():
+	loc_language_button.modulate = color
+
+
+func _on_ThemesButton_mouse_entered():
+	loc_themes_button.modulate = Color(color.r, color.g, color.b, .5)
+
+
+func _on_ThemesButton_mouse_exited():
+	loc_themes_button.modulate = color
