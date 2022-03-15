@@ -89,4 +89,8 @@ text = "By Oz Locke"
 align = 1
 
 [connection signal="button_up" from="Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_button_up"]
+[connection signal="mouse_entered" from="Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_mouse_entered"]
+[connection signal="mouse_exited" from="Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_mouse_exited"]
 [connection signal="button_up" from="Rows/Cols/ThemesButton" to="." method="_on_ThemesButton_button_up"]
+[connection signal="mouse_entered" from="Rows/Cols/ThemesButton" to="." method="_on_ThemesButton_mouse_entered"]
+[connection signal="mouse_exited" from="Rows/Cols/ThemesButton" to="." method="_on_ThemesButton_mouse_exited"]
