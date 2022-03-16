@@ -1,5 +1,6 @@
-extends MarginContainer
+extends Control
 
+var verbose = true
 # Create theme data
 var themes = {
 	"Candy" : {
@@ -15,7 +16,7 @@ var themes = {
 	}
 var themes_list = ["Candy", "Contrast"]
 # Theme for use on start
-var active_theme = "Contrast"
+var active_theme = "Candy"
 
 # Create language data
 var days = {
@@ -36,41 +37,25 @@ var loc_themes
 var loc_time
 var loc_about
 
+
 #Populate variables from active theme dictionary entry
 var bg_color = themes[active_theme]["bg_color"]
 var color = themes[active_theme]["color"]
 var font = themes[active_theme]["font"]
 
 func _ready():
+	
 	#Connect location variables
-	loc_language_button = $Rows/Cols/LanguageButton
-	loc_language = $Rows/Cols/LanguageButton/Language
-	loc_date = $Rows/Cols/Date
-	loc_themes_button = $Rows/Cols/ThemesButton
-	loc_themes = $Rows/Cols/ThemesButton/Themes
-	loc_time = $Rows/Time
-	loc_about = $Rows/About
+	loc_language_button = $Container/Rows/Cols/LanguageButton
+	loc_date = $Container/Rows/Cols/Date
+	loc_themes_button = $Container/Rows/Cols/ThemesButton
+	loc_time = $Container/Rows/Time
+	loc_about = $Container/Rows/About
 	
-	#--Populate popups--
-	# Generate items from list
-	for x in language_list:
-		loc_language.add_item(x)
-	# Connect to item selection function
-	loc_language.connect("id_pressed", self, "_on_language_pressed")
-	# Generate items from list
-	for x in themes_list:
-		loc_themes.add_item(x)
-	# Connect to item selection function
-	loc_themes.connect("id_pressed", self, "_on_theme_pressed")
-	
-	#Set origins for options objects to be centered
-	loc_language_button.rect_pivot_offset = loc_language_button.rect_scale / 2
-	loc_language.rect_pivot_offset = loc_language.rect_scale / 2
-	loc_themes_button.rect_pivot_offset = loc_themes_button.rect_scale / 2
-	loc_themes.rect_pivot_offset = loc_themes.rect_scale / 2
+	build_language_popup()
+	build_themes_popup()
 
-	
-	set_theme(active_theme)
+	update_theme()
 
 func _process(_delta):
 	# Update date and time
@@ -80,7 +65,39 @@ func _process(_delta):
 	var minutes = OS.get_datetime()["minute"]
 	loc_time.text = "%02d" % hours + ":" + "%02d" % minutes
 
-func set_theme(active_theme):
+func build_language_popup():
+	loc_language = VBoxContainer.new()
+	add_child(loc_language)
+	loc_language.visible = false
+	loc_language.rect_size.x = loc_language_button.get_size()[1]
+	
+	for item in language_list:
+		var button = Button.new()
+		loc_language.add_child(button)
+		button.text = item
+		button.align = HALIGN_LEFT
+#		button.flat = true
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.connect("button_up", self, "_on_language_item_clicked", [button.text])
+		
+func build_themes_popup():
+
+	loc_themes = VBoxContainer.new()
+	add_child(loc_themes)
+	loc_themes.visible = false
+	loc_themes.rect_size.x = loc_themes_button.get_size()[1]
+	
+	for item in themes_list:
+		var button = Button.new()
+		loc_themes.add_child(button)
+		button.text = item
+		button.align = HALIGN_RIGHT
+#		button.flat = true
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.connect("button_up", self, "_on_themes_item_clicked", [button.text])
+
+
+func update_theme():
 	# Update colors and fonts based on active theme
 	
 	#Populate variables from active theme dictionary entry
@@ -92,14 +109,16 @@ func set_theme(active_theme):
 	VisualServer.set_default_clear_color(bg_color)
 	
 	#Set fonts and colors
-	loc_language.add_font_override("font",load(font + "_small.tres"))
-	loc_language.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
-	loc_language.add_color_override("font_color_hover", color)
+	for button in loc_language.get_children():
+		button.add_font_override("font",load(font + "_small.tres"))
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.add_color_override("font_color_hover", color)
 	loc_language_button.modulate = color
-	
-	loc_themes.add_font_override("font",load(font + "_small.tres"))
-	loc_themes.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
-	loc_themes.add_color_override("font_color_hover", color)
+#
+	for button in loc_themes.get_children():
+		button.add_font_override("font",load(font + "_small.tres"))
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.add_color_override("font_color_hover", color)
 	loc_themes_button.modulate = color
 	
 	loc_date.add_font_override("font",load(font + ".tres"))
@@ -115,9 +134,9 @@ func position_popup(popup, parent):
 	popup.set_position(
 		Vector2(
 			parent.rect_global_position.x,
-			parent.rect_global_position.y + 75
+			parent.rect_global_position.y + 80
 			),
-		true
+		false
 		)
 
 func _on_language_pressed(ID):
@@ -128,17 +147,18 @@ func _on_theme_pressed(ID):
 	#Set active_theme to clicked theme
 	active_theme = loc_themes.get_item_text(ID)
 	#This needs triggering as theme isn't in _process()
-	set_theme(active_theme)
+	update_theme()
 
 func _on_LanguageButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
 	position_popup(loc_language, loc_language_button)
-	loc_language.popup()
+	loc_language.visible = true
 
 func _on_ThemesButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
 	position_popup(loc_themes, loc_themes_button)
-	loc_themes.popup()
+	loc_themes.visible = true
+	
 
 
 func _on_LanguageButton_mouse_entered():
@@ -155,3 +175,12 @@ func _on_ThemesButton_mouse_entered():
 
 func _on_ThemesButton_mouse_exited():
 	loc_themes_button.modulate = color
+	
+func _on_language_item_clicked(item):
+	loc_language.visible = false
+	active_language = item
+
+func _on_themes_item_clicked(item):
+	loc_themes.visible = false
+	active_theme = item
+	update_theme()
