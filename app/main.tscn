@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Styleboxes/popup.tres" type="StyleBox" id=2]
 [ext_resource path="res://Assets/Images/language.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/themes.png" type="Texture" id=6]
 
@@ -43,13 +42,6 @@ margin_bottom = 75.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 5 )
 
-[node name="Language" type="PopupMenu" parent="Container/Rows/Cols/LanguageButton"]
-size_flags_horizontal = 0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_styles/hover = ExtResource( 2 )
-custom_styles/panel = ExtResource( 2 )
-
 [node name="Date" type="Label" parent="Container/Rows/Cols"]
 margin_left = 78.0
 margin_right = 905.0
@@ -70,12 +62,6 @@ margin_right = 984.0
 margin_bottom = 75.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 6 )
-
-[node name="Themes" type="PopupMenu" parent="Container/Rows/Cols/ThemesButton"]
-margin_left = -100.0
-size_flags_horizontal = 0
-custom_styles/hover = ExtResource( 2 )
-custom_styles/panel = ExtResource( 2 )
 
 [node name="Time" type="Label" parent="Container/Rows"]
 margin_top = 79.0

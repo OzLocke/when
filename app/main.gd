@@ -37,11 +37,13 @@ var loc_themes
 var loc_time
 var loc_about
 
-
 #Populate variables from active theme dictionary entry
 var bg_color = themes[active_theme]["bg_color"]
 var color = themes[active_theme]["color"]
 var font = themes[active_theme]["font"]
+
+#Define any other variables
+var over_popup
 
 func _ready():
 	
@@ -52,51 +54,51 @@ func _ready():
 	loc_time = $Container/Rows/Time
 	loc_about = $Container/Rows/About
 	
-	build_language_popup()
-	build_themes_popup()
+	build_popup("Language", language_list)
+	build_popup("Themes", themes_list)
 
 	update_theme()
 
 func _process(_delta):
 	# Update date and time
 	loc_date.text = days[active_language][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
-	
+
 	var hours = OS.get_datetime()["hour"]
 	var minutes = OS.get_datetime()["minute"]
 	loc_time.text = "%02d" % hours + ":" + "%02d" % minutes
 
-func build_language_popup():
-	loc_language = VBoxContainer.new()
-	add_child(loc_language)
-	loc_language.visible = false
-	loc_language.rect_size.x = loc_language_button.get_size()[1]
+func _input(event):
+	if !over_popup:
+		if event.is_action_pressed("ui_cancel"):
+			for popup in get_tree().get_nodes_in_group("popups"):
+				popup.visible = false
+
+func build_popup(popup_name, popup_list):
+	var temp_storage = VBoxContainer.new()
+	add_child(temp_storage)
+	temp_storage.visible = false
+	temp_storage.rect_size.x = loc_language_button.get_size()[1]
+	temp_storage.name = popup_name
+	temp_storage.add_to_group("popups", true)
 	
-	for item in language_list:
+	for item in popup_list:
 		var button = Button.new()
-		loc_language.add_child(button)
+		temp_storage.add_child(button)
 		button.text = item
-		button.align = HALIGN_LEFT
-#		button.flat = true
+		if popup_name == "Language": 
+			button.align = HALIGN_LEFT
+		else:
+			button.align = HALIGN_RIGHT
+		button.flat = true
 		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
-		button.connect("button_up", self, "_on_language_item_clicked", [button.text])
+		var function_name = "_on_" + popup_name.to_lower() + "_item_clicked"
+		button.connect("button_up", self, function_name, [button.text])
+		button.connect("mouse_entered", self, "_on_popup_mouse_entered")
+		button.connect("mouse_exited", self, "_on_popup_mouse_exited")
 		
-func build_themes_popup():
-
-	loc_themes = VBoxContainer.new()
-	add_child(loc_themes)
-	loc_themes.visible = false
-	loc_themes.rect_size.x = loc_themes_button.get_size()[1]
-	
-	for item in themes_list:
-		var button = Button.new()
-		loc_themes.add_child(button)
-		button.text = item
-		button.align = HALIGN_RIGHT
-#		button.flat = true
-		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
-		button.connect("button_up", self, "_on_themes_item_clicked", [button.text])
-
-
+	if popup_name == "Language": loc_language = temp_storage
+	if popup_name == "Themes": loc_themes = temp_storage
+		
 func update_theme():
 	# Update colors and fonts based on active theme
 	
@@ -130,14 +132,13 @@ func update_theme():
 	loc_about.add_font_override("font",load(font + "_small.tres"))
 	loc_about.add_color_override("font_color", color)
 
-func position_popup(popup, parent):
-	popup.set_position(
-		Vector2(
-			parent.rect_global_position.x,
-			parent.rect_global_position.y + 80
-			),
-		false
-		)
+func position_popup(popup, parent, align):
+	var position_x = parent.rect_global_position.x
+	var position_y = parent.rect_global_position.y + parent.rect_size.y - 20
+	if align == "right": 
+		position_x = position_x + parent.rect_size.x - popup.rect_size.x
+	
+	popup.set_position(Vector2(position_x, position_y), false)
 
 func _on_language_pressed(ID):
 	#Set active_language to clicked language
@@ -149,17 +150,23 @@ func _on_theme_pressed(ID):
 	#This needs triggering as theme isn't in _process()
 	update_theme()
 
+func _on_popup_mouse_entered():
+	over_popup = true
+	print(over_popup)
+	
+func _on_popup_mouse_exited():
+	over_popup = false
+	print(over_popup)
+
 func _on_LanguageButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_language, loc_language_button)
+	position_popup(loc_language, loc_language_button, "left")
 	loc_language.visible = true
 
 func _on_ThemesButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_themes, loc_themes_button)
+	position_popup(loc_themes, loc_themes_button, "right")
 	loc_themes.visible = true
-	
-
 
 func _on_LanguageButton_mouse_entered():
 	loc_language_button.modulate = Color(color.r, color.g, color.b, .5)
