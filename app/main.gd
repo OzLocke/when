@@ -56,7 +56,6 @@ func _ready():
 	
 	build_popup("Language", language_list)
 	build_popup("Themes", themes_list)
-
 	update_theme()
 
 func _process(_delta):
@@ -66,6 +65,9 @@ func _process(_delta):
 	var hours = OS.get_datetime()["hour"]
 	var minutes = OS.get_datetime()["minute"]
 	loc_time.text = "%02d" % hours + ":" + "%02d" % minutes
+	
+	position_popup(loc_language, loc_language_button)
+	position_popup(loc_themes, loc_themes_button)
 
 func _input(event):
 	if !over_popup:
@@ -77,7 +79,8 @@ func build_popup(popup_name, popup_list):
 	var temp_storage = VBoxContainer.new()
 	add_child(temp_storage)
 	temp_storage.visible = false
-	temp_storage.rect_size.x = loc_language_button.get_size()[1]
+	temp_storage.size_flags_horizontal = false
+	temp_storage.size_flags_vertical = false
 	temp_storage.name = popup_name
 	temp_storage.add_to_group("popups", true)
 	
@@ -85,10 +88,6 @@ func build_popup(popup_name, popup_list):
 		var button = Button.new()
 		temp_storage.add_child(button)
 		button.text = item
-		if popup_name == "Language": 
-			button.align = HALIGN_LEFT
-		else:
-			button.align = HALIGN_RIGHT
 		button.flat = true
 		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
 		var function_name = "_on_" + popup_name.to_lower() + "_item_clicked"
@@ -132,12 +131,15 @@ func update_theme():
 	loc_about.add_font_override("font",load(font + "_small.tres"))
 	loc_about.add_color_override("font_color", color)
 
-func position_popup(popup, parent, align):
-	var position_x = parent.rect_global_position.x
-	var position_y = parent.rect_global_position.y + parent.rect_size.y - 20
-	if align == "right": 
-		position_x = position_x + parent.rect_size.x - popup.rect_size.x
-	
+func position_popup(popup, parent):
+	var parent_x = parent.rect_global_position.x
+	var parent_y = parent.rect_global_position.y
+	var parent_size_x = parent.rect_size.x
+	var popup_size_x = popup.rect_size.x
+
+	var position_x = parent_x + (parent_size_x / 2) - (popup_size_x / 2)
+	var position_y = parent_y + 80
+
 	popup.set_position(Vector2(position_x, position_y), false)
 
 func _on_language_pressed(ID):
@@ -160,12 +162,12 @@ func _on_popup_mouse_exited():
 
 func _on_LanguageButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_language, loc_language_button, "left")
+	position_popup(loc_language, loc_language_button)
 	loc_language.visible = true
 
 func _on_ThemesButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_themes, loc_themes_button, "right")
+	position_popup(loc_themes, loc_themes_button)
 	loc_themes.visible = true
 
 func _on_LanguageButton_mouse_entered():
