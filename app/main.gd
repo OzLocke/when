@@ -69,6 +69,7 @@ func _process(_delta):
 	position_popup(loc_themes, loc_themes_button)
 
 func _input(event):
+	#Hide popups when clicking away from them
 	if !over_popup:
 		if event.is_action_pressed("ui_cancel"):
 			for popup in get_tree().get_nodes_in_group("popups"):
@@ -140,16 +141,54 @@ func position_popup(popup, parent):
 	var position_y = parent_y + 80
 
 	popup.set_position(Vector2(position_x, position_y), false)
-
-func _on_language_pressed(ID):
-	#Set active_language to clicked language
-	active_language = loc_language.get_item_text(ID)
-
-func _on_theme_pressed(ID):
-	#Set active_theme to clicked theme
-	active_theme = loc_themes.get_item_text(ID)
-	#This needs triggering as theme isn't in _process()
-	update_theme()
+	
+func show_popup(opened_popup_name):
+	var verbose = true
+	if verbose: print("func show_popup(" + opened_popup_name + ")")
+	
+	#Define and populate variables based on name passed in
+	var popup
+	var popup_parent
+	var active_button
+	var active_button_color = themes[active_theme]["color"]
+	var non_active_button_color = Color(active_button_color.r, active_button_color.g, active_button_color.b, .5)
+	if opened_popup_name == "Language":
+		if verbose: print("Setting up Language popup")
+		popup = loc_language
+		if verbose: print("popup == " + popup.name)
+		popup_parent = loc_language_button
+		if verbose: print("popup_parent == " + popup_parent.name)
+		active_button = active_language
+		if verbose: print("active_button == " + active_button)
+	if opened_popup_name == "Themes":
+		if verbose: print("Setting up Language popup")
+		popup = loc_themes
+		if verbose: print("popup == " + popup.name)
+		popup_parent = loc_themes_button
+		if verbose: print("popup_parent == " + popup_parent.name)
+		active_button = active_theme
+		if verbose: print("active_button == " + active_button)
+	
+	#Set color of active button
+	if verbose: print("Finding active button")
+	for button in popup.get_children():
+		if verbose: print("Checking " + button.name)
+		if button.text == active_button:
+			if verbose: print("Button is active")
+			if verbose: print("Changing active button color to " + str(active_button_color))
+			button.add_color_override("font_color", active_button_color)
+		else:
+			if verbose: print("Button not active")
+			if verbose: print("Changing active button color to non-active style")
+			button.add_color_override("font_color", non_active_button_color)
+	
+	#Position popup (important for if the user has resized the screen)
+	if verbose: print("Calling position_popup()")
+	position_popup(popup, popup_parent)
+	
+	#Show popup
+	if verbose: print("Setting " + popup.name + " to visible")
+	popup.visible = true
 
 func _on_popup_mouse_entered():
 	over_popup = true
@@ -158,14 +197,10 @@ func _on_popup_mouse_exited():
 	over_popup = false
 
 func _on_LanguageButton_button_up():
-	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_language, loc_language_button)
-	loc_language.visible = true
+	show_popup("Language")
 
 func _on_ThemesButton_button_up():
-	#Show popup on click (moving popup to under it's buttons)
-	position_popup(loc_themes, loc_themes_button)
-	loc_themes.visible = true
+	show_popup("Themes")
 
 func _on_LanguageButton_mouse_entered():
 	loc_language_button.modulate = Color(color.r, color.g, color.b, .5)
