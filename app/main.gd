@@ -1,6 +1,5 @@
 extends Control
 
-var verbose = true
 # Create theme data
 var themes = {
 	"Candy" : {
@@ -51,7 +50,7 @@ func _ready():
 	loc_language_button = $Container/Rows/Cols/LanguageButton
 	loc_date = $Container/Rows/Cols/Date
 	loc_themes_button = $Container/Rows/Cols/ThemesButton
-	loc_time = $Container/Rows/Time
+	loc_time = $Time
 	loc_about = $Container/Rows/About
 	
 	build_popup("Language", language_list)
@@ -154,11 +153,9 @@ func _on_theme_pressed(ID):
 
 func _on_popup_mouse_entered():
 	over_popup = true
-	print(over_popup)
 	
 func _on_popup_mouse_exited():
 	over_popup = false
-	print(over_popup)
 
 func _on_LanguageButton_button_up():
 	#Show popup on click (moving popup to under it's buttons)

@@ -12,27 +12,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Time" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "00:00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Container" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-custom_constants/margin_right = 20
+custom_constants/margin_right = 40
 custom_constants/margin_top = 20
-custom_constants/margin_left = 20
+custom_constants/margin_left = 40
 custom_constants/margin_bottom = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Rows" type="VBoxContainer" parent="Container"]
-margin_left = 20.0
+margin_left = 40.0
 margin_top = 20.0
-margin_right = 1004.0
+margin_right = 984.0
 margin_bottom = 580.0
 mouse_filter = 2
 
 [node name="Cols" type="HBoxContainer" parent="Container/Rows"]
-margin_right = 984.0
+margin_right = 944.0
 margin_bottom = 74.0
 mouse_filter = 2
 
@@ -44,7 +56,7 @@ texture_normal = ExtResource( 5 )
 
 [node name="Date" type="Label" parent="Container/Rows/Cols"]
 margin_left = 78.0
-margin_right = 906.0
+margin_right = 866.0
 margin_bottom = 74.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -57,28 +69,21 @@ __meta__ = {
 }
 
 [node name="ThemesButton" type="TextureButton" parent="Container/Rows/Cols"]
-margin_left = 910.0
-margin_right = 984.0
+margin_left = 870.0
+margin_right = 944.0
 margin_bottom = 74.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 6 )
 
-[node name="Time" type="Label" parent="Container/Rows"]
+[node name="Spacer" type="Control" parent="Container/Rows"]
 margin_top = 78.0
-margin_right = 984.0
+margin_right = 944.0
 margin_bottom = 542.0
-size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "00:00"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="About" type="Label" parent="Container/Rows"]
 margin_top = 546.0
-margin_right = 984.0
+margin_right = 944.0
 margin_bottom = 560.0
 size_flags_horizontal = 3
 text = "By Oz Locke"
