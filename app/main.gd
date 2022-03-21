@@ -15,7 +15,7 @@ var themes = {
 	}
 var themes_list = ["Candy", "Contrast"]
 # Theme for use on start
-var active_theme = "Candy"
+var active_theme = "Contrast"
 
 # Create language data
 var days = {
@@ -138,7 +138,7 @@ func position_popup(popup, parent):
 	var popup_size_x = popup.rect_size.x
 
 	var position_x = parent_x + (parent_size_x / 2) - (popup_size_x / 2)
-	var position_y = parent_y + 80
+	var position_y = parent_y + 160
 
 	popup.set_position(Vector2(position_x, position_y), false)
 	

@@ -39,25 +39,25 @@ __meta__ = {
 [node name="Rows" type="VBoxContainer" parent="Container"]
 margin_left = 40.0
 margin_top = 20.0
-margin_right = 984.0
-margin_bottom = 580.0
+margin_right = 1880.0
+margin_bottom = 1060.0
 mouse_filter = 2
 
 [node name="Cols" type="HBoxContainer" parent="Container/Rows"]
-margin_right = 944.0
-margin_bottom = 74.0
+margin_right = 1840.0
+margin_bottom = 150.0
 mouse_filter = 2
 
 [node name="LanguageButton" type="TextureButton" parent="Container/Rows/Cols"]
-margin_right = 74.0
-margin_bottom = 74.0
+margin_right = 150.0
+margin_bottom = 150.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 5 )
 
 [node name="Date" type="Label" parent="Container/Rows/Cols"]
-margin_left = 78.0
-margin_right = 866.0
-margin_bottom = 74.0
+margin_left = 154.0
+margin_right = 1686.0
+margin_bottom = 150.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Mon 01"
@@ -69,22 +69,22 @@ __meta__ = {
 }
 
 [node name="ThemesButton" type="TextureButton" parent="Container/Rows/Cols"]
-margin_left = 870.0
-margin_right = 944.0
-margin_bottom = 74.0
+margin_left = 1690.0
+margin_right = 1840.0
+margin_bottom = 150.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 6 )
 
 [node name="Spacer" type="Control" parent="Container/Rows"]
-margin_top = 78.0
-margin_right = 944.0
-margin_bottom = 542.0
+margin_top = 154.0
+margin_right = 1840.0
+margin_bottom = 1022.0
 size_flags_vertical = 3
 
 [node name="About" type="Label" parent="Container/Rows"]
-margin_top = 546.0
-margin_right = 944.0
-margin_bottom = 560.0
+margin_top = 1026.0
+margin_right = 1840.0
+margin_bottom = 1040.0
 size_flags_horizontal = 3
 text = "By Oz Locke"
 align = 1
