@@ -27,6 +27,10 @@ var language_list = ["English", "Norsk", "Cymraeg"]
 #Language for use on start
 var active_language = "English"
 
+#Load styleboxes
+var style_inactive = load("res://Assets/Styleboxes/inactive.tres")
+var style_active = load("res://Assets/Styleboxes/active.tres")
+
 #Define location variables
 var loc_language_button
 var loc_language
@@ -76,50 +80,63 @@ func _input(event):
 				popup.visible = false
 
 func build_popup(popup_name, popup_list):
+	#--Create a popup, and build the buttons
+	#Create new popup container
 	var temp_storage = VBoxContainer.new()
 	add_child(temp_storage)
+	#Set popup name and styles
+	temp_storage.name = popup_name
 	temp_storage.visible = false
 	temp_storage.size_flags_horizontal = false
 	temp_storage.size_flags_vertical = false
-	temp_storage.name = popup_name
+	#Add popup to popups group
 	temp_storage.add_to_group("popups", true)
-	
+	#Loop over items in popup list to create buttons
 	for item in popup_list:
+		#Create a new button
 		var button = Button.new()
 		temp_storage.add_child(button)
+		#Set button text and styles
 		button.text = item
-		button.flat = true
-		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		# set stylebox overrides
+		var overrides = ["hover", "pressed", "focus", "disabled", "normal"]
+		for override in overrides:
+			if override == "pressed":
+				button.add_stylebox_override(override, style_active)
+			else:
+				button.add_stylebox_override(override, style_inactive)
+		#Connect button signals and functions
 		var function_name = "_on_" + popup_name.to_lower() + "_item_clicked"
 		button.connect("button_up", self, function_name, [button.text])
 		button.connect("mouse_entered", self, "_on_popup_mouse_entered")
 		button.connect("mouse_exited", self, "_on_popup_mouse_exited")
-		
+	#Asign popup to relevant holding variable	
 	if popup_name == "Language": loc_language = temp_storage
 	if popup_name == "Themes": loc_themes = temp_storage
 		
 func update_theme():
-	# Update colors and fonts based on active theme
-	
+	#--Update colors and fonts based on active theme
 	#Populate variables from active theme dictionary entry
 	bg_color = themes[active_theme]["bg_color"]
 	color = themes[active_theme]["color"]
 	font = themes[active_theme]["font"]
-	
 	#Set background color
 	VisualServer.set_default_clear_color(bg_color)
-	
+	#Set stylebox colors
+	style_active.bg_color = color
 	#Set fonts and colors
 	for button in loc_language.get_children():
 		button.add_font_override("font",load(font + "_small.tres"))
-		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .33))
 		button.add_color_override("font_color_hover", color)
+		button.add_color_override("font_color_pressed", bg_color)
 	loc_language_button.modulate = color
 #
 	for button in loc_themes.get_children():
 		button.add_font_override("font",load(font + "_small.tres"))
-		button.add_color_override("font_color", Color(color.r, color.g, color.b, .5))
+		button.add_color_override("font_color", Color(color.r, color.g, color.b, .33))
 		button.add_color_override("font_color_hover", color)
+		button.add_color_override("font_color_pressed", bg_color)
 	loc_themes_button.modulate = color
 	
 	loc_date.add_font_override("font",load(font + ".tres"))
@@ -138,7 +155,7 @@ func position_popup(popup, parent):
 	var popup_size_x = popup.rect_size.x
 
 	var position_x = parent_x + (parent_size_x / 2) - (popup_size_x / 2)
-	var position_y = parent_y + 160
+	var position_y = parent_y + 110
 
 	popup.set_position(Vector2(position_x, position_y), false)
 	
