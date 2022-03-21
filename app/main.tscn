@@ -45,19 +45,20 @@ mouse_filter = 2
 
 [node name="Cols" type="HBoxContainer" parent="Container/Rows"]
 margin_right = 1840.0
-margin_bottom = 150.0
+margin_bottom = 100.0
 mouse_filter = 2
 
 [node name="LanguageButton" type="TextureButton" parent="Container/Rows/Cols"]
-margin_right = 150.0
-margin_bottom = 150.0
+margin_right = 100.0
+margin_bottom = 100.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 5 )
+stretch_mode = 2
 
 [node name="Date" type="Label" parent="Container/Rows/Cols"]
-margin_left = 154.0
-margin_right = 1686.0
-margin_bottom = 150.0
+margin_left = 104.0
+margin_right = 1736.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Mon 01"
@@ -69,14 +70,15 @@ __meta__ = {
 }
 
 [node name="ThemesButton" type="TextureButton" parent="Container/Rows/Cols"]
-margin_left = 1690.0
+margin_left = 1740.0
 margin_right = 1840.0
-margin_bottom = 150.0
+margin_bottom = 100.0
 size_flags_horizontal = 0
 texture_normal = ExtResource( 6 )
+stretch_mode = 2
 
 [node name="Spacer" type="Control" parent="Container/Rows"]
-margin_top = 154.0
+margin_top = 104.0
 margin_right = 1840.0
 margin_bottom = 1022.0
 size_flags_vertical = 3
