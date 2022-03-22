@@ -127,10 +127,12 @@ func build_popup(popup_name, popup_list):
 		temp_storage.add_child(button)
 		#Set button name, text and styles
 		button.name = item
-		if popup_name == "Themes":
-			button.text = dict[active_language]["themes"][item]
-		else:
+		if popup_name == "Language":
 			button.text = item
+			button.align = Button.ALIGN_LEFT
+		else:
+			button.text = dict[active_language]["themes"][item]
+			button.align = Button.ALIGN_RIGHT
 		# set stylebox overrides
 		var overrides = ["hover", "pressed", "focus", "disabled", "normal"]
 		for override in overrides:
@@ -193,14 +195,22 @@ func update_language():
 		button.text = themes[button.name]
 
 func position_popup(popup, parent):
+	#Set the positions of the popup, relative to it's parent button
 	var parent_x = parent.rect_global_position.x
 	var parent_y = parent.rect_global_position.y
 	var parent_size_x = parent.rect_size.x
 	var popup_size_x = popup.rect_size.x
-
-	var position_x = parent_x + (parent_size_x / 2) - (popup_size_x / 2)
+	
+	#Set position x for the popup
+	var position_x
+	# if it's the Language popup align it to the left of the parent button
+	if popup.name == "Language":
+		position_x = parent_x
+	else:
+	# otherwise align it to the right of the parent button
+		position_x = parent_x + parent_size_x - popup_size_x
 	var position_y = parent_y + 110
-
+	#Set the popup's new position
 	popup.set_position(Vector2(position_x, position_y), false)
 	
 func show_popup(opened_popup_name):
