@@ -1,6 +1,6 @@
 extends Control
 
-var release = "0.1.0"
+var release = "0.1.1"
 
 # Create theme data
 var themes = {
