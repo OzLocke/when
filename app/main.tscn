@@ -83,13 +83,23 @@ margin_right = 1840.0
 margin_bottom = 1022.0
 size_flags_vertical = 3
 
-[node name="About" type="Label" parent="Container/Rows"]
+[node name="MetaCols" type="HBoxContainer" parent="Container/Rows"]
 margin_top = 1026.0
 margin_right = 1840.0
 margin_bottom = 1040.0
+
+[node name="Release" type="Label" parent="Container/Rows/MetaCols"]
+margin_right = 1757.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "By Oz Locke"
-align = 1
+
+[node name="Copyright" type="Label" parent="Container/Rows/MetaCols"]
+margin_left = 1761.0
+margin_right = 1840.0
+margin_bottom = 14.0
+text = "By Oz Locke"
+align = 2
 
 [connection signal="button_up" from="Container/Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_button_up"]
 [connection signal="mouse_entered" from="Container/Rows/Cols/LanguageButton" to="." method="_on_LanguageButton_mouse_entered"]
