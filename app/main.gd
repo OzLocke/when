@@ -1,5 +1,7 @@
 extends Control
 
+var release = "0.1.0"
+
 # Create theme data
 var themes = {
 	"Candy" : {
@@ -39,6 +41,8 @@ var loc_themes_button
 var loc_themes
 var loc_time
 var loc_about
+var loc_release
+var loc_copyright
 
 #Populate variables from active theme dictionary entry
 var bg_color = themes[active_theme]["bg_color"]
@@ -48,18 +52,21 @@ var font = themes[active_theme]["font"]
 #Define any other variables
 var over_popup
 
-func _ready():
-	
+func _ready():	
 	#Connect location variables
 	loc_language_button = $Container/Rows/Cols/LanguageButton
 	loc_date = $Container/Rows/Cols/Date
 	loc_themes_button = $Container/Rows/Cols/ThemesButton
 	loc_time = $Time
-	loc_about = $Container/Rows/About
-	
+	loc_release = $Container/Rows/MetaCols/Release
+	loc_copyright = $Container/Rows/MetaCols/Copyright
+	#Build popups and set initial theme
 	build_popup("Language", language_list)
 	build_popup("Themes", themes_list)
 	update_theme()
+	#Populate meta
+	loc_release.text = "Win " + release
+	loc_copyright.text = "©Locke Creatives " + str(OS.get_datetime()["year"])
 
 func _process(_delta):
 	# Update date and time
@@ -144,9 +151,11 @@ func update_theme():
 	
 	loc_time.add_font_override("font",load(font + "_large.tres"))
 	loc_time.add_color_override("font_color", color)
-	
-	loc_about.add_font_override("font",load(font + "_small.tres"))
-	loc_about.add_color_override("font_color", color)
+	# for loop here allows for adding multiple labels in the meta row without repeating code
+	var meta = [loc_release, loc_copyright]
+	for label in meta:
+		label.add_font_override("font",load(font + "_small.tres"))
+		label.add_color_override("font_color", Color(color.r, color.g, color.b, .33))
 
 func position_popup(popup, parent):
 	var parent_x = parent.rect_global_position.x
