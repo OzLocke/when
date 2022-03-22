@@ -1,6 +1,6 @@
 extends Control
 
-var release = "0.1.2"
+var release = "0.1.0"
 
 #---
 #For some reason Godot can't look for ints as dict keys, so they're all strings!

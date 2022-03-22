@@ -10,9 +10,12 @@ config_version=4
 
 [application]
 
-config/name="time"
+config/name="When"
+config/description="The low impact clock app"
 run/main_scene="res://main.tscn"
 run/low_processor_mode=true
+boot_splash/image="res://Assets/Images/splashscreen.png"
+boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://icon.png"
 
 [display]
