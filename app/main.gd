@@ -1,56 +1,5 @@
 extends Control
 
-var release = "0.1.0"
-
-#---
-#For some reason Godot can't look for ints as dict keys, so they're all strings!
-#---
-
-# Create theme data
-var themes = {
-	"0" : {
-		"name" : "Candy",
-		"bg_color" : Color(0.937255, 0.627451, 0.894118),
-		"color" : Color(0.388235, 0.156863, 0.352941),
-		"font" : "res://Assets/Fonts/BRLNSR"
-		},
-	"1" : {
-		"name" : "Contrast",
-		"bg_color" : Color(0.101961, 0.101961, 0.101961),
-		"color" : Color(1, 1, 1),
-		"font" : "res://Assets/Fonts/ARIALBD"
-		}
-	}
-# Theme for use on start
-var active_theme = "0"
-
-# Create language data
-var dict = {
-	"English": {
-		"days" : ["Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-		"themes" : {
-			"0": "Candy", 
-			"1" : "Contrast"
-		}
-	},
-	"Norsk": {
-		"days" : ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"],
-		"themes" : {
-			"0" : "Sukkertøy", 
-			"1" : "Kontrast"
-		}
-	},
-	"Cymraeg": {
-		"days" : ["Dydd Llun", "Dydd Mawrth", "Dydd Mercher", "Dydd Iau", "Dydd Gwener", "Dydd Sadwrn", "Dydd Sul"],
-		"themes" : {
-			"0" : "Candy", 
-			"1" : "Cyferbyniad"
-		}
-	}
-}
-#Language for use on start
-var active_language = "English"
-
 #Load styleboxes
 var style_inactive = load("res://Assets/Styleboxes/inactive.tres")
 var style_active = load("res://Assets/Styleboxes/active.tres")
@@ -66,15 +15,21 @@ var loc_about
 var loc_release
 var loc_copyright
 
-#Populate variables from active theme dictionary entry
-var bg_color = themes[active_theme]["bg_color"]
-var color = themes[active_theme]["color"]
-var font = themes[active_theme]["font"]
+# Define other full-scope variables
+var data_source = "res://data.json"
+var data
+var bg_color
+var color
+var font
+var active_theme
+var active_language
 
 #Define any other variables
 var over_popup
 
 func _ready():	
+	load_data()
+	
 	#Connect location variables
 	loc_language_button = $Container/Rows/Cols/LanguageButton
 	loc_date = $Container/Rows/Cols/Date
@@ -82,17 +37,20 @@ func _ready():
 	loc_time = $Time
 	loc_release = $Container/Rows/MetaCols/Release
 	loc_copyright = $Container/Rows/MetaCols/Copyright
+	#Set initial theme and language
+	active_theme = data["active_theme"]
+	active_language = data["active_language"]
 	#Build popups and set initial theme
-	build_popup("Language", dict)
-	build_popup("Themes", dict[active_language]["themes"])
+	build_popup("Language", data["dict"])
+	build_popup("Themes", data["dict"][active_language]["theme_names"])
 	update_theme()
 	#Populate meta
-	loc_release.text = "Win " + release
-	loc_copyright.text = "©Locke Creatives " + str(OS.get_datetime()["year"])
+	loc_release.text = "Win " + data["meta"]["release"]
+	loc_copyright.text = "© Locke Creatives " + str(OS.get_datetime()["year"])
 
 func _process(_delta):
 	# Update date and time
-	loc_date.text = dict[active_language]["days"][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
+	loc_date.text = data["dict"][active_language]["days"][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
 
 	var hours = OS.get_datetime()["hour"]
 	var minutes = OS.get_datetime()["minute"]
@@ -107,6 +65,19 @@ func _input(event):
 		if event.is_action_pressed("ui_cancel"):
 			for popup in get_tree().get_nodes_in_group("popups"):
 				popup.visible = false
+
+func load_data():
+	var file = File.new()
+	file.open(data_source, file.READ)
+	var data_raw = file.get_as_text()
+	data = parse_json(data_raw)
+	file.close()
+
+func save_data():
+	var file = File.new()
+	file.open(data_source, file.WRITE)
+	file.store_string(JSON.print(data, "	", true))
+	file.close()
 
 func build_popup(popup_name, popup_list):
 	#--Create a popup, and build the buttons
@@ -131,7 +102,7 @@ func build_popup(popup_name, popup_list):
 			button.text = item
 			button.align = Button.ALIGN_LEFT
 		else:
-			button.text = dict[active_language]["themes"][item]
+			button.text = data["dict"][active_language]["theme_names"][item]
 			button.align = Button.ALIGN_RIGHT
 		# set stylebox overrides
 		var overrides = ["hover", "pressed", "focus", "disabled", "normal"]
@@ -153,9 +124,10 @@ func build_popup(popup_name, popup_list):
 func update_theme():
 	#--Update colors and fonts based on active theme
 	#Populate variables from active theme dictionary entry
-	bg_color = themes[active_theme]["bg_color"]
-	color = themes[active_theme]["color"]
-	font = themes[active_theme]["font"]
+	#BG Color
+	bg_color = Color(data["themes"][active_theme]["bg_color"])
+	color = Color(data["themes"][active_theme]["color"])
+	font = data["themes"][active_theme]["font"]
 	#Set background color
 	VisualServer.set_default_clear_color(bg_color)
 	#Set stylebox colors
@@ -188,7 +160,7 @@ func update_theme():
 		
 func update_language():
 	#Update the themes dropdown to show the theme names in the right language
-	var themes = dict[active_language]["themes"]
+	var themes = data["dict"][active_language]["theme_names"]
 	#Loop over each button to set it's text
 	for button in loc_themes.get_children():
 		#Use the button name to find the relevant entry in the dict
@@ -221,7 +193,7 @@ func show_popup(opened_popup_name):
 	var popup
 	var popup_parent
 	var active_button
-	var active_button_color = themes[active_theme]["color"]
+	var active_button_color = Color(data["themes"][active_theme]["color"])
 	var non_active_button_color = Color(active_button_color.r, active_button_color.g, active_button_color.b, .5)
 	if opened_popup_name == "Language":
 		if verbose: print("Setting up Language popup")
@@ -289,11 +261,22 @@ func _on_ThemesButton_mouse_exited():
 	loc_themes_button.modulate = color
 	
 func _on_language_item_clicked(item):
+	#Hide popup
 	loc_language.visible = false
+	#Update language
 	active_language = item
 	update_language()
+	#Save change to file
+	data["active_language"] = active_language
+	save_data()
+	
 
 func _on_themes_item_clicked(item):
+	#Hide popup
 	loc_themes.visible = false
+	#Update theme
 	active_theme = item
 	update_theme()
+	#Save change to file
+	data["active_theme"] = active_theme
+	save_data()
