@@ -16,6 +16,7 @@ var loc_release
 var loc_copyright
 
 # Define other full-scope variables
+var data_source = "res://data.json"
 var data
 var bg_color
 var color
@@ -67,10 +68,16 @@ func _input(event):
 
 func load_data():
 	var file = File.new()
-	file.open("res://data.json", file.READ)
+	file.open(data_source, file.READ)
 	var data_raw = file.get_as_text()
 	data = parse_json(data_raw)
-	
+	file.close()
+
+func save_data():
+	var file = File.new()
+	file.open(data_source, file.WRITE)
+	file.store_string(JSON.print(data, "	", true))
+	file.close()
 
 func build_popup(popup_name, popup_list):
 	#--Create a popup, and build the buttons
@@ -254,11 +261,22 @@ func _on_ThemesButton_mouse_exited():
 	loc_themes_button.modulate = color
 	
 func _on_language_item_clicked(item):
+	#Hide popup
 	loc_language.visible = false
+	#Update language
 	active_language = item
 	update_language()
+	#Save change to file
+	data["active_language"] = active_language
+	save_data()
+	
 
 func _on_themes_item_clicked(item):
+	#Hide popup
 	loc_themes.visible = false
+	#Update theme
 	active_theme = item
 	update_theme()
+	#Save change to file
+	data["active_theme"] = active_theme
+	save_data()
