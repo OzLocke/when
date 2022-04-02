@@ -1,0 +1,43 @@
+{"meta" : {
+    "release" : "0.1.0"
+    },
+"themes" : {
+	"0" : {
+		"name" : "Candy",
+		"bg_color" : [0.937255, 0.627451, 0.894118],
+		"color" : [0.388235, 0.156863, 0.352941],
+		"font" : "res://Assets/Fonts/BRLNSR"
+		},
+	"1" : {
+		"name" : "Contrast",
+		"bg_color" : [0.101961, 0.101961, 0.101961],
+		"color" : [1, 1, 1],
+		"font" : "res://Assets/Fonts/ARIALBD"
+		}
+	},
+"active_theme" : "0",
+"dict" : {
+	"English": {
+		"days" : ["Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+		"theme_names" : {
+			"0": "Candy", 
+			"1" : "Contrast"
+		}
+	},
+	"Norsk": {
+		"days" : ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"],
+		"theme_names" : {
+			"0" : "Sukkertøy", 
+			"1" : "Kontrast"
+		}
+	},
+	"Cymraeg": {
+		"days" : ["Dydd Llun", "Dydd Mawrth", "Dydd Mercher", "Dydd Iau", "Dydd Gwener", "Dydd Sadwrn", "Dydd Sul"],
+		"theme_names" : {
+			"0" : "Candy", 
+			"1" : "Cyferbyniad"
+		}
+	}
+},
+"active_langauge" : "English"
+}
