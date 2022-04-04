@@ -14,11 +14,11 @@ var loc_time
 var loc_about
 var loc_release
 var loc_copyright
+var loc_user_data = "user://config.cfg"
 
 # Define other full-scope variables
 var app_data = Globals.data
-var user_data
-var save_file = "res://data.json"
+var user_data = {} 
 var bg_color
 var color
 var font
@@ -29,8 +29,8 @@ var active_language
 var over_popup
 
 func _ready():	
-	load_data()
-	
+	#Load in or create user preferences data
+	load_data()	
 	#Connect location variables
 	loc_language_button = $Container/Rows/Cols/LanguageButton
 	loc_date = $Container/Rows/Cols/Date
@@ -39,8 +39,8 @@ func _ready():
 	loc_release = $Container/Rows/MetaCols/Release
 	loc_copyright = $Container/Rows/MetaCols/Copyright
 	#Set initial theme and language
-	active_theme = user_data["active_theme"]
-	active_language = user_data["active_language"]
+	active_theme = user_data["theme"]
+	active_language = user_data["language"]
 	#Build popups and set initial theme
 	build_popup("Language", app_data["dict"])
 	build_popup("Themes", app_data["dict"][active_language]["theme_names"])
@@ -68,19 +68,40 @@ func _input(event):
 				popup.visible = false
 
 func load_data():
-	var file = File.new()
-	file.open(save_file, file.READ)
-	var data_raw = file.get_as_text()
-	user_data = parse_json(data_raw)
-	file.close()
-	print(user_data)
+	#(Try to) Load the data file
+	var file = ConfigFile.new()
+	var err = file.load(loc_user_data)
+	#If the data file doesn't exist, create it
+	if err != OK:
+		create_data()
+	else:
+		#Import data
+		import_user_data(file)
+
+func create_data():	
+	#Create new ConfigFile object
+	var config = ConfigFile.new()
+	#Asign default values
+	config.set_value("preferences", "language", "English")
+	config.set_value("preferences", "theme", "1")
+	#Save it to a file (overwrite if already exists)
+	config.save(loc_user_data)
+	#Import data
+	import_user_data(config)
 
 func save_data():
-	var file = File.new()
-	file.open(save_file, file.WRITE)
-	file.store_string(JSON.print(user_data, "	", true))
-	file.close()
-	print(user_data)
+	#Create new ConfigFile object
+	var config = ConfigFile.new()
+	#Asign current user choices to file
+	for key in user_data.keys():
+		config.set_value("preferences", key, user_data.get(key))
+	#Overwrite config file
+	config.save(loc_user_data)
+
+func import_user_data(file):
+	#Loop through the preferences and add them to the user data dictionary
+	for key in file.get_section_keys("preferences"):
+		user_data[key] = file.get_value("preferences", key)
 
 func build_popup(popup_name, popup_list):
 	#--Create a popup, and build the buttons
@@ -122,8 +143,7 @@ func build_popup(popup_name, popup_list):
 	#Asign popup to relevant holding variable
 	if popup_name == "Language": loc_language = temp_storage
 	if popup_name == "Themes": loc_themes = temp_storage
-	
-		
+
 func update_theme():
 	#--Update colors and fonts based on active theme
 	#Populate variables from active theme dictionary entry
@@ -270,7 +290,7 @@ func _on_language_item_clicked(item):
 	active_language = item
 	update_language()
 	#Save change to file
-	user_data["active_language"] = active_language
+	user_data["language"] = active_language
 	save_data()
 	
 
@@ -281,5 +301,5 @@ func _on_themes_item_clicked(item):
 	active_theme = item
 	update_theme()
 	#Save change to file
-	user_data["active_theme"] = active_theme
+	user_data["theme"] = active_theme
 	save_data()
