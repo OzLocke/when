@@ -16,8 +16,9 @@ var loc_release
 var loc_copyright
 
 # Define other full-scope variables
-var data_source = "res://data.json"
-var data
+var app_data = Globals.data
+var user_data
+var save_file = "res://data.json"
 var bg_color
 var color
 var font
@@ -38,19 +39,19 @@ func _ready():
 	loc_release = $Container/Rows/MetaCols/Release
 	loc_copyright = $Container/Rows/MetaCols/Copyright
 	#Set initial theme and language
-	active_theme = data["active_theme"]
-	active_language = data["active_language"]
+	active_theme = user_data["active_theme"]
+	active_language = user_data["active_language"]
 	#Build popups and set initial theme
-	build_popup("Language", data["dict"])
-	build_popup("Themes", data["dict"][active_language]["theme_names"])
+	build_popup("Language", app_data["dict"])
+	build_popup("Themes", app_data["dict"][active_language]["theme_names"])
 	update_theme()
 	#Populate meta
-	loc_release.text = "Win " + data["meta"]["release"]
+	loc_release.text = "Win " + app_data["meta"]["release"]
 	loc_copyright.text = "© Locke Creatives " + str(OS.get_datetime()["year"])
 
 func _process(_delta):
 	# Update date and time
-	loc_date.text = data["dict"][active_language]["days"][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
+	loc_date.text = app_data["dict"][active_language]["days"][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
 
 	var hours = OS.get_datetime()["hour"]
 	var minutes = OS.get_datetime()["minute"]
@@ -68,16 +69,18 @@ func _input(event):
 
 func load_data():
 	var file = File.new()
-	file.open(data_source, file.READ)
+	file.open(save_file, file.READ)
 	var data_raw = file.get_as_text()
-	data = parse_json(data_raw)
+	user_data = parse_json(data_raw)
 	file.close()
+	print(user_data)
 
 func save_data():
 	var file = File.new()
-	file.open(data_source, file.WRITE)
-	file.store_string(JSON.print(data, "	", true))
+	file.open(save_file, file.WRITE)
+	file.store_string(JSON.print(user_data, "	", true))
 	file.close()
+	print(user_data)
 
 func build_popup(popup_name, popup_list):
 	#--Create a popup, and build the buttons
@@ -102,7 +105,7 @@ func build_popup(popup_name, popup_list):
 			button.text = item
 			button.align = Button.ALIGN_LEFT
 		else:
-			button.text = data["dict"][active_language]["theme_names"][item]
+			button.text = app_data["dict"][active_language]["theme_names"][item]
 			button.align = Button.ALIGN_RIGHT
 		# set stylebox overrides
 		var overrides = ["hover", "pressed", "focus", "disabled", "normal"]
@@ -125,9 +128,9 @@ func update_theme():
 	#--Update colors and fonts based on active theme
 	#Populate variables from active theme dictionary entry
 	#BG Color
-	bg_color = Color(data["themes"][active_theme]["bg_color"])
-	color = Color(data["themes"][active_theme]["color"])
-	font = data["themes"][active_theme]["font"]
+	bg_color = Color(app_data["themes"][active_theme]["bg_color"])
+	color = Color(app_data["themes"][active_theme]["color"])
+	font = app_data["themes"][active_theme]["font"]
 	#Set background color
 	VisualServer.set_default_clear_color(bg_color)
 	#Set stylebox colors
@@ -160,7 +163,7 @@ func update_theme():
 		
 func update_language():
 	#Update the themes dropdown to show the theme names in the right language
-	var themes = data["dict"][active_language]["theme_names"]
+	var themes = app_data["dict"][active_language]["theme_names"]
 	#Loop over each button to set it's text
 	for button in loc_themes.get_children():
 		#Use the button name to find the relevant entry in the dict
@@ -193,7 +196,7 @@ func show_popup(opened_popup_name):
 	var popup
 	var popup_parent
 	var active_button
-	var active_button_color = Color(data["themes"][active_theme]["color"])
+	var active_button_color = Color(app_data["themes"][active_theme]["color"])
 	var non_active_button_color = Color(active_button_color.r, active_button_color.g, active_button_color.b, .5)
 	if opened_popup_name == "Language":
 		if verbose: print("Setting up Language popup")
@@ -267,7 +270,7 @@ func _on_language_item_clicked(item):
 	active_language = item
 	update_language()
 	#Save change to file
-	data["active_language"] = active_language
+	user_data["active_language"] = active_language
 	save_data()
 	
 
@@ -278,5 +281,5 @@ func _on_themes_item_clicked(item):
 	active_theme = item
 	update_theme()
 	#Save change to file
-	data["active_theme"] = active_theme
+	user_data["active_theme"] = active_theme
 	save_data()
