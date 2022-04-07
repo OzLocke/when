@@ -13,6 +13,7 @@ var loc_themes
 var loc_time
 var loc_about
 var loc_release
+var loc_name
 var loc_copyright
 var loc_user_data = "user://config.cfg"
 
@@ -46,12 +47,20 @@ func _ready():
 	build_popup("Themes", app_data["dict"][active_language]["theme_names"])
 	update_theme()
 	#Populate meta
-	loc_release.text = "Win " + app_data["meta"]["release"]
+	var release_format_string = "When Clock App%s - %s %s"
+	loc_release.text =  release_format_string % [
+		char(0x2122), OS.get_name(), 
+		app_data["meta"]["versions"][OS.get_name()]["release"]
+		]
 	loc_copyright.text = "© Locke Creatives " + str(OS.get_datetime()["year"])
 
 func _process(_delta):
 	# Update date and time
-	loc_date.text = app_data["dict"][active_language]["days"][OS.get_datetime()["weekday"]-1] + " " + str("%02d" % OS.get_datetime()["day"])
+	var date_format_string = "%s %s" 
+	loc_date.text = date_format_string % [
+		app_data["dict"][active_language]["days"][OS.get_datetime()["weekday"]-1], 
+		str("%02d" % OS.get_datetime()["day"])
+		]
 
 	var hours = OS.get_datetime()["hour"]
 	var minutes = OS.get_datetime()["minute"]
@@ -176,8 +185,7 @@ func update_theme():
 	loc_time.add_font_override("font",load(font + "_large.tres"))
 	loc_time.add_color_override("font_color", color)
 	# for loop here allows for adding multiple labels in the meta row without repeating code
-	var meta = [loc_release, loc_copyright]
-	for label in meta:
+	for label in $Container/Rows/MetaCols.get_children():
 		label.add_font_override("font",load(font + "_small.tres"))
 		label.add_color_override("font_color", Color(color.r, color.g, color.b, .33))
 		
