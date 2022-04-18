@@ -116,7 +116,7 @@ var data = {
 			"name": "Pixel",
 			"bg_color": "cadc9f",
 			"color": "0f380f",
-			"font": "res://Assets/Fonts/CHARY"
+			"font": "res://Assets/Fonts/KONGTEXT"
 		},
 		"6": {
 			"name": "Ancient",
