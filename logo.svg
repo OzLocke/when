@@ -7,43 +7,43 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="400"
-   height="400"
-   viewBox="0 0 400 399.99999"
-   version="1.1"
-   id="svg8"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="logo.svg"
-   inkscape:export-filename="D:\LocalRepos\when\app\icon.png"
+   inkscape:export-ydpi="96"
    inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-filename="D:\LocalRepos\when\icon.png"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 400 399.99999"
+   height="400"
+   width="400">
   <defs
      id="defs2" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#ff6666"
-     borderopacity="1"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="181.37883"
-     inkscape:cy="326.89663"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:pagecheckerboard="true"
-     inkscape:showpageshadow="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
-     inkscape:window-x="1912"
-     inkscape:window-y="32"
-     inkscape:window-maximized="1"
-     inkscape:document-rotation="0"
-     units="px"
-     showguides="true"
+     inkscape:snap-page="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-page="true" />
+     showguides="true"
+     units="px"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
+     inkscape:window-y="32"
+     inkscape:window-x="1912"
+     inkscape:window-height="1377"
+     inkscape:window-width="2560"
+     inkscape:showpageshadow="false"
+     inkscape:pagecheckerboard="true"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:cy="326.89663"
+     inkscape:cx="181.37883"
+     inkscape:zoom="1"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1"
+     bordercolor="#ff6666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -57,35 +57,36 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
+     transform="translate(-767.3642,117.80634)"
      id="layer1"
-     transform="translate(-767.3642,117.80634)">
-    <g
-       id="g838">
-      <rect
-         y="-117.80634"
-         x="767.3642"
-         height="400"
-         width="400"
-         id="rect833"
-         style="fill:none;stroke-width:2.70657;paint-order:markers stroke fill;stop-color:#000000" />
-      <text
-         id="text832"
-         y="69.689743"
-         x="973.23761"
-         style="font-size:235.857px;line-height:0.65;font-family:'Alien Encounters';-inkscape-font-specification:'Alien Encounters';text-align:center;text-anchor:middle;stroke-width:5.89645"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Cambria;-inkscape-font-specification:Cambria;stroke-width:5.89645"
-           y="69.689743"
-           x="973.23761"
-           id="tspan830"
-           sodipodi:role="line">WH</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Cambria;-inkscape-font-specification:Cambria;stroke-width:5.89645"
-           y="251.20619"
-           x="973.23761"
-           sodipodi:role="line"
-           id="tspan844">EN</tspan></text>
-    </g>
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <path
+       d="m 767.3642,-117.80634 v 400 h 400 v -400 z m 17.2266,40.29883 H 930.206 v 5.30859 h -14.9883 l -16.7578,41.5293 25.293,61.41016 38.1992,-102.93946 h -20.2969 v -5.30859 h 40.5938 v 5.30859 h -14.3653 l -51.5214,137.4961 h -3.6426 L 886.0732,0.66046 860.0517,65.29718 h -3.8496 L 800.204,-72.19892 h -15.6132 z m 211.8125,0 h 68.9043 v 5.30859 h -22.17 v 59.64063 h 60.2657 v -59.64063 h -21.7539 v -5.30859 h 68.4882 v 5.30859 h -21.9628 V 56.76202 h 21.9628 v 5.30859 h -68.4882 v -5.30859 h 21.7539 V -7.2497 h -60.2657 v 64.01172 h 22.17 v 5.30859 h -68.9043 v -5.30859 h 21.9629 V -72.19892 h -21.9629 z m -171.1153,5.30859 42.4668,104.18946 15.3008,-38.51172 -26.8535,-65.67774 z m 56.3106,0 14.0508,34.24414 13.8437,-34.24414 z M 826.0165,99.09014 h 118.6563 l 2.3945,37.26368 h -5.3086 c -1.8041,-11.31057 -5.5161,-19.46487 -11.1367,-24.46094 -5.6206,-4.99608 -14.9888,-7.49414 -28.1035,-7.49414 h -29.6641 v 59.84961 h 12.5957 c 4.441,0 8.1871,-0.41732 11.2403,-1.25 3.1225,-0.90207 5.8975,-3.26168 8.3261,-7.07813 2.4981,-3.81645 3.9207,-9.78371 4.2676,-17.90234 h 5.4141 v 59.12109 h -5.4141 c -0.5551,-11.24117 -2.7402,-18.63103 -6.5566,-22.16992 -3.7471,-3.60827 -9.5057,-5.41211 -17.2774,-5.41211 h -12.5957 v 63.80274 h 28.4161 c 16.0984,0 27.2344,-3.36488 33.4101,-10.09571 6.2451,-6.80022 9.959,-17.24391 11.1387,-31.33008 h 5.3086 l -1.3535,46.73438 H 826.0165 v -5.30859 h 22.17 V 104.39874 h -22.17 z m 146.0313,0 h 53.291 l 65.0547,97.83985 h 0.416 v -92.53125 h -23.1074 v -5.3086 h 49.5449 v 5.3086 h -21.1289 v 137.49609 h -4.2676 L 999.9423,103.77374 h -0.416 v 129.58594 h 23.627 v 5.30859 h -49.6485 v -5.30859 h 20.7129 V 104.39874 h -22.1699 z"
+       style="opacity:1;fill:#008080;stroke:none;stroke-width:4;stroke-linejoin:round;paint-order:markers stroke fill;stop-color:#000000"
+       id="rect835" />
+    <rect
+       style="opacity:1;fill:#008080;stroke:none;stroke-width:4;stroke-linejoin:round;paint-order:markers stroke fill;stop-color:#000000"
+       id="rect837"
+       width="400.00006"
+       height="400"
+       x="240.3642"
+       y="-171.80634" />
+    <text
+       xml:space="preserve"
+       style="font-size:213.166px;line-height:0.65;font-family:'Alien Encounters';-inkscape-font-specification:'Alien Encounters';text-align:center;text-anchor:middle;fill:#000000;stroke-width:5.32917;"
+       x="442.96634"
+       y="8.0702114"
+       id="text845"><tspan
+         sodipodi:role="line"
+         id="tspan841"
+         x="442.96634"
+         y="8.0702114"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:213.166px;font-family:'Bodoni MT';-inkscape-font-specification:'Bodoni MT, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:5.32917;">WH</tspan><tspan
+         id="tspan843"
+         sodipodi:role="line"
+         x="442.96634"
+         y="184.66841"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:213.166px;font-family:'Bodoni MT';-inkscape-font-specification:'Bodoni MT, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:5.32917;">EN</tspan></text>
   </g>
 </svg>

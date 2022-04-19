@@ -15,7 +15,7 @@ var loc_about
 var loc_release
 var loc_name
 var loc_copyright
-var loc_user_data = "user://config.cfg"
+var loc_user_data = "res://config.cfg"
 
 # Define other full-scope variables
 var app_data = Globals.data
