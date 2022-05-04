@@ -1,50 +1,20 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  godot-tester:
+  build:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: godot-tester
       # You may pin to the exact commit or the version.
       # uses: croconut/godot-tester@360be4611a7cc344b6741735880725c7859ad0a6
       uses: croconut/godot-tester@v2.5
       with:
-        # Your Godot version number e.g. 3.2.2
-        version: 3.4 # default is 3.2.2
-        # Your Godot release type e.g. rc2, beta3
-        release_type: stable # optional, default is stable
+        version: 3.4
+        release_type: stable
         # Give relative path to your project.godot, if not in top level of repo
-        path: app # optional, default is ./
-        # Test against mono version? Default: false
-        #is-mono: # optional, default is false
-        # How long to spend on importing assets, don't set if testing is not required
-        #import-time: # optional, default is 1
-        # How long the test should be run before it's timed out and fails
-        #test-timeout: # optional, default is 300
-        # Decimal value for minimum passing score e.g. if 88% of tests pass and minimum-pass is 0.8, then action passes.
-        #minimum-pass: # optional, default is 0.99
-        # Directory containing Gut tests
-        #test-dir: # optional, default is res://test
-        # If instead of running the GUT command line you'd like to run a GUT scene instead: recommended to extend gut's plugin script and exit godot when all tests complete
-        #direct-scene: # optional, default is false
-        # Set to true to check by assert count instead of tests
-        #assert-check: # optional, default is false
-        # Maximum number of failing asserts or tests, if this or pass rate fails then the action will fail. Is not checked if you do not set it
-        #max-fails: # optional, default is false
-        # Disable Godot 'SCRIPT ERROR's from causing tests to fail
-        #ignore-errors: # optional, default is false
-        # Full path to your GUT config file, e.g. 'res://<path>/<config>.json'.
-        #config-file: # optional, default is res://.gutconfig.json
+        path: app
