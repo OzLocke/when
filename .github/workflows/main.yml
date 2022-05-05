@@ -17,3 +17,5 @@ jobs:
         release_type: stable
         # Give relative path to your project.godot, if not in top level of repo
         path: app
+        # Full path to your GUT config file, e.g. 'res://<path>/<config>.json'.
+        config-file: 'res://app/addons/gut/gut_config.gd
